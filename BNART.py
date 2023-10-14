@@ -1,6 +1,41 @@
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+
+    def shortest_distance(self, start, end):
+        queue = deque([(start, 0)])  # (node, distance)
+        visited = set()
+
+        while queue:
+            node, distance = queue.popleft()
+            if node == end:
+                return distance
+
+            if node not in visited:
+                visited.add(node)
+                for neighbor in self.graph[node]:
+                    queue.append((neighbor, distance + 1))
+
+        # If there is no path from start to end
+        return -1
+
+# Example usage:
+g = Graph()
+g.add_edge(1, 2)
+g.add_edge(1, 3)
+g.add_edge(2, 4)
+g.add_edge(2, 5)
+g.add_edge(3, 6)
+
+start_node = 1
+end_node = 6
+distance = g.shortest_distance(start_node, end_node)
+print(f"Shortest distance from node {start_node} to node {end_node} is {distance} units.")
+
 # 0 - roads, 1 - buildings , 2 - intersections
-
-
 GRID = [[[1],[0,12],[1]],
         [[0,7],[0,5],[1]],
         [[2,8.5],[0,7],[0,2]],
@@ -40,7 +75,7 @@ def HILL_CLIMB(Sv, v, Dv):
     
     while(current != Dv):
         # Get all neighbors
-        neighbors[] = current.getNeighbors()
+        neighbors = current.getNeighbors()
         # Distance to get to destination from current location
         best_distance = current.getDistance()
         # Compare distance to all other neighbors
@@ -53,4 +88,21 @@ def HILL_CLIMB(Sv, v, Dv):
     # End reached, return current
     return current
 
+
+
 # Get distance will use BFS
+def getDistance(G, start, end):
+        queue = deque([(start, 0)])  # (node, distance)
+        visited = set()
+
+        while queue:
+            node, distance = queue.popleft()
+            if node == end:
+                return distance
+
+            if node not in visited:
+                visited.add(node)
+                for neighbor in G.graph[node]:
+                    queue.append((neighbor, distance + 1))
+
+        # If there is no path from start to 
